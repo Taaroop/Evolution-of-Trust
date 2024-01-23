@@ -1,4 +1,4 @@
-# Prisoner's Dilemma Population Simulation
+# Evolution of Trust - Population Simulation
 import random as r
 
 # Cutoffs
