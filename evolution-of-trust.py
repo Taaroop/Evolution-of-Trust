@@ -32,19 +32,14 @@ def copycat(li, fp, cround):
 def grudger(li, fp, cround):
     if li == 0 and fp == 0 and cround == 0:
         return "Grudger"
+    
     if li == []:
         return "Cooperate"
-    elif "Cheat" in li:
-        return "Cheat"
-
-def random(li, fp, cround):
-    if li == 0 and fp == 0 and cround == 0:
-        return "Random"
-    a = r.randrange(0, 100)
-    if a < 50:
-        return "Cooperate"
     else:
-        return "Cheat"
+        if "Cheat" in li:
+            return "Cheat"
+        else:
+            return "Cooperate"
 
 def detective(li, fp, cround):
     if li == 0 and fp == 0 and cround == 0:
@@ -98,6 +93,15 @@ def simpleton(li, fp, cround):
             else:
                 return "Cooperate"
 
+def random(li, fp, cround):
+    if li == 0 and fp == 0 and cround == 0:
+        return "Random"
+    a = r.randrange(0, 100)
+    if a < 50:
+        return "Cooperate"
+    else:
+        return "Cheat"
+
 # Matchmaking function
 
 def match(s1, s2, rounds): # for 'detective' purposes, there will be atleast 10 rounds
@@ -134,14 +138,74 @@ def match(s1, s2, rounds): # for 'detective' purposes, there will be atleast 10 
     else:
         winner = "Tie"
         
-    return winner
+    return score1, score2, winner
 
-# Tournament Function
-always_cheat = 15
-always_coop = 15
-copycat = 14
-grudger = 10
-detective = 20
-copykitten = 19
-simpleton = 200
-pizza_taco = 11
+Always_cheat = 15
+Always_coop = 15
+Copycat = 14
+Grudger = 10
+Detective = 20
+Copykitten = 19
+Simpleton = 200
+Pizza_taco = 11
+
+li = [always_coop, always_cheat, copycat, grudger, detective, copykitten, simpleton]
+r.shuffle(li)
+
+# Tournament Function - Audience vs Strategy
+
+rounds = 10
+grand_total = 0
+wins = 0
+
+for s in li:
+
+    score1 = 0
+    score2 = 0
+    li_2 = []
+
+    for i in range(1, rounds+1):
+        my_move = str(input("Cooperate or Cheat?: "))
+        s_move = s(li_2, s, i)
+        
+        li_2.append(s_move)
+        li_2.append(my_move)
+        
+        print("Your opponent played:", s_move)
+        
+        if my_move == "Cheat" and s_move == "Cheat":
+            score1 += ch_ch
+            score2 += ch_ch
+            print("You get", ch_ch, "points!")
+        
+        elif my_move == "Cheat" and s_move == "Cooperate":
+            score1 += ch_co
+            score2 += co_ch
+            print("You get", ch_co, "points!")
+        
+        elif my_move == "Cooperate" and s_move == "Cheat":
+            score1 += co_ch
+            score2 += ch_co
+            print("You get", co_ch, "points!")
+        
+        else:
+            score1 += co_co
+            score2 += co_co
+            print("You get", co_co, "points!")
+        
+        print("----------")
+    
+    grand_total += score1
+    if score1 > score2:
+        print("You win against this bot!")
+        wins += 1
+    elif score1 < score2:
+        print("You lost against this bot!")
+    else:
+        print("You have a tie against this bot!")
+        wins += 0.5
+
+print("Your overall score is:", grand_total + 16*wins)
+
+# Tournament Function - Strategy vs Strategy
+# To be completed
