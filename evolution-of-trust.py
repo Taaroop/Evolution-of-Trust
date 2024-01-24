@@ -149,7 +149,7 @@ Copykitten = 19
 Simpleton = 200
 Pizza_taco = 11
 
-li = [always_coop, always_cheat, copycat, grudger, detective, copykitten, simpleton]
+li = [always_coop, always_cheat, copycat, grudger, detective, copykitten, simpleton, random]
 r.shuffle(li)
 
 # Tournament Function - Audience vs Strategy
